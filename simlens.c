@@ -102,8 +102,6 @@ drawaxis(void)
 	line(screen, f, p, 0, 0, 0, axis, ZP);
 }
 
-// known bugs: kogda perehodim za focus, posle tret'ei tochki figura obrezaetsya
-// TODO: refactor nado etoy dichi a dal'she mne len'
 static void
 drawdots(void)
 {
@@ -116,7 +114,7 @@ drawdots(void)
 				if (flags & DrawObj)
 					line(screen, obj[i-1], obj[0], 0, 0, 0, dots, ZP);
 				if (flags & DrawImg)
-					if (img[i-1].t) // po idee gde to tut bug (bug logiki vsego wtf)
+					if (img[i-1].t)
 						line(screen, img[i-1].p, img[fr].p, 0, 0, 0, real, ZP);
 					else
 						line(screen, img[i-1].p, img[fv].p, 0, 0, 0, virt, ZP);
@@ -132,7 +130,7 @@ drawdots(void)
 			}		
 		}
 		img[i] = refract(obj[i]);
-		if (!er && img[i].t) { // seychas 3 chasa utra ya khz nakhuya ya eto sdelal
+		if (!er && img[i].t) {
 			fr = i;
 			er = 1;
 		}
@@ -205,8 +203,8 @@ main(void)
 	if (initdraw(nil, nil, "simlens") < 0)
 		sysfatal("initdraw failed: %r");
 	back = allocimagemix(display, DPaleyellow, DWhite);
-	axis = allocimage(display, Rect(0,0,1,1), RGB24, 1, DBlack); // blya tak navernoe tozhe ne stoit delat'
-	dots = allocimage(display, Rect(0,0,1,1), RGB24, 1, DRed);   // no niche, uchimsya !
+	axis = allocimage(display, Rect(0,0,1,1), RGB24, 1, DBlack);
+	dots = allocimage(display, Rect(0,0,1,1), RGB24, 1, DRed);
 	virt = allocimage(display, Rect(0,0,1,1), RGB24, 1, DGreen);
 	real = allocimage(display, Rect(0,0,1,1), RGB24, 1, DBlue);
 	redraw();
